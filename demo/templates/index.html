@@ -1,53 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Button Page</title>
+    <title>HAWKVISIONAI Page</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 20px;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            position: relative;
+        }
+
+        h1 {
+            margin-top: 40px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #ecf0f1;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .u-text-2 {
+            font-size: 2rem;
+            text-align: left;
+            margin: 20px 0 10px;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+
+        #button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .left-buttons,
+        .right-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .button-wrapper {
+            margin: 10px 0;
+            text-align: left;
         }
 
         button {
             padding: 10px 20px;
-            margin: 5px;
-            font-size: 16px;
+            font-size: 18px;
             cursor: pointer;
+            background-color: #3498db;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .button-description {
+            margin-top: 8px;
+            max-width: 200px;
         }
 
         #output {
             margin-top: 20px;
             font-weight: bold;
         }
+
+        .footer {
+            background-color: #34495e;
+            color: #ecf0f1;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        .footer-link {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
+        .copyright {
+            font-size: 14px;
+        }
     </style>
 </head>
+
 <body>
 
-    <a href="{% url 'live' %}">
-        <button id="live">Read Text</button>
-    </a>
+    <h1 onclick="window.location.href='https://try-website.vercel.app/'">HAWKVISIONAI</h1>
 
-    <a href="{% url 'live' %}">
-        <button id="button2">Listen News</button>
-    </a>
+    <p class="u-text-2">Try out our features:</p>
 
-    <a href="{% url 'live' %}">
-        <button id="button3">Chat with asistant</button>
-    </a>
+    <div class="image-container">
+        <!-- Replace the placeholder image URL with your actual image URL -->
+        <img src="https://www.craiyon.com/image/w6IUf8Q_Tw6LZWIHM7hSJg" alt="Image" style="max-width: 100%;" class="overlay">
+    </div>
 
-    <a href="{% url 'live' %}">
-        <button id="button4">Object Detection</button>
-    </a>
+    <div id="button-container">
+        <div class="left-buttons">
+            <div class="button-wrapper">
+                <a href="{% url 'live' %}">
+                    <button id="live">Read Text</button>
+                </a>
+                <p class="button-description">Experience AI-powered text reading</p>
+            </div>
 
-    <a href="{% url 'live' %}">
-        <button id="button5">Button 5</button>
-    </a>
-    
+            <div class="button-wrapper">
+                <a href="{% url 'news' %}">
+                    <button id="button2">Listen News</button>
+                </a>
+                <p class="button-description">Listen to the latest news with AI</p>
+            </div>
+
+            <div class="button-wrapper">
+                <a href="{% url 'live' %}">
+                    <button id="button3">Chat with Assistant</button>
+                </a>
+                <p class="button-description">Engage in conversation with our AI assistant</p>
+            </div>
+        </div>
+
+        <div class="right-buttons">
+            <div class="button-wrapper">
+                <a href="{% url 'live' %}">
+                    <button id="button4">Object Detection</button>
+                </a>
+                <p class="button-description">Explore AI-powered object detection</p>
+            </div>
+
+            <div class="button-wrapper">
+                <a href="{% url 'live' %}">
+                    <button id="button5">Button 5</button>
+                </a>
+                <p class="button-description">Custom description for Button 5</p>
+            </div>
+        </div>
+    </div>
 
     <div id="output"></div>
+
+    <footer class="footer">
+        <p>Visit our website - <a href="https://try-website.vercel.app/" class="footer-link">CLICK HERE</a></p>
+        <p class="copyright">&copy; hawkvisionai</p>
+    </footer>
 
     <script>
         function buttonClicked(buttonNumber) {
@@ -55,4 +177,5 @@
         }
     </script>
 </body>
+
 </html>
