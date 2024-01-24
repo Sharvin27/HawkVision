@@ -9,16 +9,20 @@ import threading
 import pytesseract
 import pyttsx3
 
+
 @gzip.gzip_page
 def live(request):
     try:
         cam = VideoCamera()
-        return StreamingHttpResponse(gen(cam), content_type="multipart/x-mixed-replace;boundary=frame")
+        return StreamingHttpResponse(
+            gen(cam), content_type="multipart/x-mixed-replace;boundary=frame"
+        )
     except:
         pass
-    return render(request, 'live.html')
+    return render(request, "live.html")
 
-#to capture video class
+
+# to capture video class
 class VideoCamera(object):
     def __init__(self):
         self.video = cv2.VideoCapture(0)
@@ -27,7 +31,9 @@ class VideoCamera(object):
         self.engine = pyttsx3.init()
 
         # Set up Tesseract OCR
-        pytesseract.pytesseract.tesseract_cmd = r"C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
+        pytesseract.pytesseract.tesseract_cmd = (
+            r"C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
+        )
 
         (self.grabbed, self.frame) = self.video.read()
         threading.Thread(target=self.update, args=()).start()
@@ -44,22 +50,24 @@ class VideoCamera(object):
         detected_text = pytesseract.image_to_string(gray)
 
         # Remove leading/trailing whitespaces and filter out empty lines
-        detected_text = '\n'.join(line.strip() for line in detected_text.split('\n') if line.strip())
+        detected_text = "\n".join(
+            line.strip() for line in detected_text.split("\n") if line.strip()
+        )
         print(detected_text)
 
         self.engine.say(detected_text)
         self.engine.runAndWait()
 
-        _, jpeg = cv2.imencode('.jpg', gray)
+        _, jpeg = cv2.imencode(".jpg", gray)
         return jpeg.tobytes()
 
     def update(self):
         while True:
             (self.grabbed, self.frame) = self.video.read()
 
+
 def gen(camera):
     while True:
         frame = camera.get_frame()
-        
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+
+        yield (b"--frame\r\n" b"Content-Type: image/jpeg\r\n\r\n" + frame + b"\r\n\r\n")
